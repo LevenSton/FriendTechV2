@@ -1,0 +1,16 @@
+{
+  "name": "hardhat-project",
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^2.0.2",
+    "hardhat": "^2.19.0"
+  },
+  "dependencies": {
+    "@primitivefi/hardhat-dodoc": "^0.2.3",
+    "dotenv": "^16.3.1",
+    "hardhat-deploy": "^0.11.43"
+  },
+  "author": "Tomo",
+  "contributors": [
+    "Leven"
+  ]
+}
