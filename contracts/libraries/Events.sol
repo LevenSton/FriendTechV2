@@ -28,10 +28,25 @@ library Events {
         uint256 timestamp
     );
 
+    event TomoSignAddressSet(
+        address indexed caller,
+        address indexed prevTomoSignAddress,
+        address indexed newTomoSignAddress,
+        uint256 timestamp
+    );
+
     event StateSet(
         address indexed caller,
         DataTypes.TomoV2EntryPointState indexed prevState,
         DataTypes.TomoV2EntryPointState indexed newState,
         uint256 timestamp
     );
+
+    event CurveModuleWhitelisted(
+        address indexed curveModule,
+        bool whitelist,
+        uint256 timestamp
+    );
+
+    event ModuleBaseConstructed(address indexed tomoV2, uint256 timestamp);
 }

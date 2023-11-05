@@ -2,30 +2,13 @@
 
 *Tomo Protocol*
 
-> TomoHubStorage
+> TomoV2Storage
 
-This is an abstract contract that *only* contains storage for the TomoFragment contract. This *must* be inherited last (bar interfaces) in order to preserve the TomoFragment storage layout. Adding storage variables should be done solely at the bottom of this contract.
+This is an abstract contract that *only* contains storage for the TomoV2 contract. This *must* be inherited last (bar interfaces) in order to preserve the TomoV2 storage layout. Adding storage variables should be done solely at the bottom of this contract.
 
 
 
 ## Methods
-
-### _globalLockIndex
-
-```solidity
-function _globalLockIndex() external view returns (uint256)
-```
-
-
-
-
-
-
-#### Returns
-
-| Name | Type | Description |
-|---|---|---|
-| _0 | uint256 | undefined |
 
 ### _governance
 
@@ -44,10 +27,10 @@ function _governance() external view returns (address)
 |---|---|---|
 | _0 | address | undefined |
 
-### _indexToVotePassLockInfo
+### _keySubjectInfo
 
 ```solidity
-function _indexToVotePassLockInfo(uint256) external view returns (bytes32 subject, uint256 amount, uint256 lockUntil, address owner)
+function _keySubjectInfo(address) external view returns (uint256 supply, address curveModule)
 ```
 
 
@@ -58,33 +41,14 @@ function _indexToVotePassLockInfo(uint256) external view returns (bytes32 subjec
 
 | Name | Type | Description |
 |---|---|---|
-| _0 | uint256 | undefined |
+| _0 | address | undefined |
 
 #### Returns
 
 | Name | Type | Description |
 |---|---|---|
-| subject | bytes32 | undefined |
-| amount | uint256 | undefined |
-| lockUntil | uint256 | undefined |
-| owner | address | undefined |
-
-### _minPriceKeyCanFragment
-
-```solidity
-function _minPriceKeyCanFragment() external view returns (uint256)
-```
-
-
-
-
-
-
-#### Returns
-
-| Name | Type | Description |
-|---|---|---|
-| _0 | uint256 | undefined |
+| supply | uint256 | undefined |
+| curveModule | address | undefined |
 
 ### _protocolFeeAddress
 
@@ -120,30 +84,22 @@ function _state() external view returns (enum DataTypes.TomoV2EntryPointState)
 |---|---|---|
 | _0 | enum DataTypes.TomoV2EntryPointState | undefined |
 
-### _subjectToFragmentPool
+### _tomoSignAddress
 
 ```solidity
-function _subjectToFragmentPool(bytes32) external view returns (bytes32 subject, uint256 holdAmount, address poolCreator, address fragmentPoolAddress)
+function _tomoSignAddress() external view returns (address)
 ```
 
 
 
 
 
-#### Parameters
-
-| Name | Type | Description |
-|---|---|---|
-| _0 | bytes32 | undefined |
 
 #### Returns
 
 | Name | Type | Description |
 |---|---|---|
-| subject | bytes32 | undefined |
-| holdAmount | uint256 | undefined |
-| poolCreator | address | undefined |
-| fragmentPoolAddress | address | undefined |
+| _0 | address | undefined |
 
 
 

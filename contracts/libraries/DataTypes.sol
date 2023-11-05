@@ -13,25 +13,39 @@ library DataTypes {
         Open,
         Paused
     }
-
-    struct FragmentConfig {
-        bytes32 subject;
-        uint256 holdAmount;
-        address poolCreator;
-        address fragmentPoolAddress;
+    /**
+     * @notice A struct containing the necessary information to reconstruct an EIP-712 typed data signature.
+     *
+     * @param v The signature's recovery parameter.
+     * @param r The signature's r parameter.
+     * @param s The signature's s parameter
+     */
+    struct EIP712Signature {
+        uint8 v;
+        bytes32 r;
+        bytes32 s;
     }
 
-    struct VotePassLockInfo {
-        bytes32 subject;
+    struct InitialSubjectData {
+        address curveModule;
+        bytes curveModuleInitData;
+    }
+
+    struct SubjectInfo {
+        uint256 supply; //total supply
+        address curveModule; //curveModule address
+        mapping(address => uint256) balanceOf; //holder -> balance
+    }
+
+    struct BuyKeyData {
+        address keySubject;
         uint256 amount;
-        uint256 lockUntil;
-        address owner;
+        uint256 maxAcceptPrice;
     }
 
-    struct Share {
-        uint256 _amount;
-        uint256 _timeStamp;
-        uint256 _deadline;
-        address _liquidityProvider;
+    struct SellKeyData {
+        address keySubject;
+        uint256 amount;
+        uint256 minAcceptPrice;
     }
 }

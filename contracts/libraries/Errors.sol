@@ -7,5 +7,12 @@ library Errors {
     error NotGovernance();
     error CannotInitImplementation();
     error Initialized();
+    error SignatureInvalid();
+    error CurveModuleNotWhitelisted();
+    error SubjectAlreadyInitial();
+    error NotTomoV2();
     error InitParamsInvalid();
+    error SubjectNotInitial();
+    error InsufficientKeyAmount();
+    error MsgValueNotEnough();
 }
