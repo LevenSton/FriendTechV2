@@ -82,6 +82,8 @@ interface ITomoV2 {
 
     function sellKey(DataTypes.SellKeyData calldata vars) external;
 
+    function transferKey(DataTypes.TransferKeyData calldata vars) external;
+
     /// ***********************
     /// *****VIEW FUNCTIONS*****
     /// ***********************

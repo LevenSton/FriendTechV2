@@ -22,4 +22,5 @@ library Errors {
     error EthValueNotEnough();
     error ConstCurveCanSell();
     error LessThanMinAcceptPrice();
+    error TransferNotSupport();
 }

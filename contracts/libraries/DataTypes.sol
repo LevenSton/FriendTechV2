@@ -50,4 +50,10 @@ library DataTypes {
         uint256 amount;
         uint256 minAcceptPrice;
     }
+
+    struct TransferKeyData {
+        address keySubject;
+        address to;
+        uint256 amount;
+    }
 }

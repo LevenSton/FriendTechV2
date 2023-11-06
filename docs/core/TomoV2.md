@@ -319,6 +319,22 @@ set new tomo sign fee address
 |---|---|---|
 | newTomoSignAddress | address | new tomo-sign address |
 
+### transferKey
+
+```solidity
+function transferKey(DataTypes.TransferKeyData vars) external nonpayable
+```
+
+
+
+
+
+#### Parameters
+
+| Name | Type | Description |
+|---|---|---|
+| vars | DataTypes.TransferKeyData | undefined |
+
 ### whitelistCurveModule
 
 ```solidity
@@ -596,6 +612,17 @@ error SubjectAlreadyInitial()
 
 ```solidity
 error SubjectNotInitial()
+```
+
+
+
+
+
+
+### TransferNotSupport
+
+```solidity
+error TransferNotSupport()
 ```
 
 

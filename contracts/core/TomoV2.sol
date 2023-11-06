@@ -177,7 +177,7 @@ contract TomoV2 is TomoV2Base, VersionedInitializable, TomoV2Storage, ITomoV2 {
     function sellKey(
         DataTypes.SellKeyData calldata vars
     ) external override whenNotPaused {
-        if (_keySubjectInfo[msg.sender].curveModule == address(0))
+        if (_keySubjectInfo[vars.keySubject].curveModule == address(0))
             revert Errors.SubjectNotInitial();
         if (
             _keySubjectInfo[vars.keySubject].balanceOf[msg.sender] < vars.amount
@@ -213,6 +213,24 @@ contract TomoV2 is TomoV2Base, VersionedInitializable, TomoV2Storage, ITomoV2 {
             block.timestamp,
             false
         );
+    }
+
+    function transferKey(
+        DataTypes.TransferKeyData calldata vars
+    ) external override {
+        if (_keySubjectInfo[vars.keySubject].curveModule == address(0))
+            revert Errors.SubjectNotInitial();
+        if (
+            _keySubjectInfo[vars.keySubject].balanceOf[msg.sender] < vars.amount
+        ) revert Errors.InsufficientKeyAmount();
+
+        bool canTransfer = ICurveModule(
+            _keySubjectInfo[vars.keySubject].curveModule
+        ).processTransfer();
+        if (!canTransfer) revert Errors.TransferNotSupport();
+
+        _keySubjectInfo[vars.keySubject].balanceOf[msg.sender] -= vars.amount;
+        _keySubjectInfo[vars.keySubject].balanceOf[vars.to] += vars.amount;
     }
 
     /// ****************************
