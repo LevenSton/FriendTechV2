@@ -53,7 +53,7 @@ interface ITomoV2 {
      *
      * @param newState new state
      */
-    function setState(DataTypes.TomoV2EntryPointState newState) external;
+    function setState(DataTypes.TomoV2State newState) external;
 
     /**
      * @notice set whitelist curve module address

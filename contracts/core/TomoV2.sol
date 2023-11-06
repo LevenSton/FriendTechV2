@@ -31,7 +31,7 @@ contract TomoV2 is TomoV2Base, VersionedInitializable, TomoV2Storage, ITomoV2 {
         address protocolFeeAddress,
         address tomoSignAddress
     ) external override initializer {
-        _setState(DataTypes.TomoV2EntryPointState.Paused);
+        _setState(DataTypes.TomoV2State.Paused);
         _setGovernance(governanceContractAddress);
         _setProtocolFeeAddress(protocolFeeAddress);
         _setTomoSignAddress(tomoSignAddress);
@@ -62,7 +62,7 @@ contract TomoV2 is TomoV2Base, VersionedInitializable, TomoV2Storage, ITomoV2 {
 
     /// @inheritdoc ITomoV2
     function setState(
-        DataTypes.TomoV2EntryPointState newState
+        DataTypes.TomoV2State newState
     ) external override onlyGov {
         _setState(newState);
     }
@@ -344,8 +344,8 @@ contract TomoV2 is TomoV2Base, VersionedInitializable, TomoV2Storage, ITomoV2 {
         if (msg.sender != _governance) revert Errors.NotGovernance();
     }
 
-    function _setState(DataTypes.TomoV2EntryPointState newState) internal {
-        DataTypes.TomoV2EntryPointState prevState = _state;
+    function _setState(DataTypes.TomoV2State newState) internal {
+        DataTypes.TomoV2State prevState = _state;
         _state = newState;
         emit Events.StateSet(msg.sender, prevState, newState, block.timestamp);
     }
@@ -367,7 +367,6 @@ contract TomoV2 is TomoV2Base, VersionedInitializable, TomoV2Storage, ITomoV2 {
     }
 
     function _validateNotPaused() internal view {
-        if (_state == DataTypes.TomoV2EntryPointState.Paused)
-            revert Errors.Paused();
+        if (_state == DataTypes.TomoV2State.Paused) revert Errors.Paused();
     }
 }

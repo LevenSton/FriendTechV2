@@ -232,7 +232,7 @@ set new protocol fee address
 ### setState
 
 ```solidity
-function setState(enum DataTypes.TomoV2EntryPointState newState) external nonpayable
+function setState(enum DataTypes.TomoV2State newState) external nonpayable
 ```
 
 set new state of TomoHubEntryPoint
@@ -243,7 +243,7 @@ set new state of TomoHubEntryPoint
 
 | Name | Type | Description |
 |---|---|---|
-| newState | enum DataTypes.TomoV2EntryPointState | new state |
+| newState | enum DataTypes.TomoV2State | new state |
 
 ### setTomoSignAddress
 

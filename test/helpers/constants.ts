@@ -1,0 +1,8 @@
+export const MAX_UINT256 = '0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff';
+export const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000';
+export const BYTES32_ZERO_ADDRESS = '0x0000000000000000000000000000000000000000000000000000000000000000'
+
+// Fetched from $npx hardhat node, account # 7
+export const SIGN_PRIVATEKEY = '0x272f23f400bb043ad539d1193d69fc2dc3f054649b36349656dd510a15e0d8df';
+export const SIGN_ADDRESS = '0x01b49b8665292216c431d2dC4B2B700d7A2c3605';
+export const HARDHAT_CHAINID = 31337;

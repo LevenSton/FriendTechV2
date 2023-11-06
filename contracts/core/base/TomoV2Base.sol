@@ -20,7 +20,7 @@ abstract contract TomoV2Base {
     bytes32 public constant BUY_TYPEHASH =
         keccak256(
             abi.encodePacked(
-                "Buy(bytes32 subject,address sender,uint256 amount)"
+                "BuyKey(address subject,address sender,uint256 amount)"
             )
         );
     bytes32 public constant EIP712_DOMAIN_TYPEHASH =

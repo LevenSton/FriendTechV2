@@ -37,8 +37,8 @@ library Events {
 
     event StateSet(
         address indexed caller,
-        DataTypes.TomoV2EntryPointState indexed prevState,
-        DataTypes.TomoV2EntryPointState indexed newState,
+        DataTypes.TomoV2State indexed prevState,
+        DataTypes.TomoV2State indexed newState,
         uint256 timestamp
     );
 

@@ -19,7 +19,7 @@ abstract contract TomoV2Storage {
     //whitelist curve address
     mapping(address => bool) internal _curveModuleWhitelisted;
 
-    DataTypes.TomoV2EntryPointState public _state;
+    DataTypes.TomoV2State public _state;
 
     //tomo sign address
     address public _tomoSignAddress;

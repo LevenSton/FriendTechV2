@@ -70,7 +70,7 @@ function _protocolFeeAddress() external view returns (address)
 ### _state
 
 ```solidity
-function _state() external view returns (enum DataTypes.TomoV2EntryPointState)
+function _state() external view returns (enum DataTypes.TomoV2State)
 ```
 
 
@@ -82,7 +82,7 @@ function _state() external view returns (enum DataTypes.TomoV2EntryPointState)
 
 | Name | Type | Description |
 |---|---|---|
-| _0 | enum DataTypes.TomoV2EntryPointState | undefined |
+| _0 | enum DataTypes.TomoV2State | undefined |
 
 ### _tomoSignAddress
 

@@ -10,7 +10,8 @@ const deployFn: DeployFunction = async (hre) => {
     hre,
     "TomoV2Impl"
   )
-  const { deployer,  governance, tomosign} = await hre.getNamedAccounts()
+  const tomosign = "0x01b49b8665292216c431d2dC4B2B700d7A2c3605"
+  const { deployer,  governance} = await hre.getNamedAccounts()
 
   let data = TomoV2Impl.interface.encodeFunctionData('initialize', [
     governance, deployer, tomosign

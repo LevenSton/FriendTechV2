@@ -9,7 +9,7 @@ pragma solidity ^0.8.12;
  * @notice A standard library of data types used throughout the TomoFragment.
  */
 library DataTypes {
-    enum TomoV2EntryPointState {
+    enum TomoV2State {
         Open,
         Paused
     }

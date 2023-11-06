@@ -104,7 +104,7 @@ function _protocolFeeAddress() external view returns (address)
 ### _state
 
 ```solidity
-function _state() external view returns (enum DataTypes.TomoV2EntryPointState)
+function _state() external view returns (enum DataTypes.TomoV2State)
 ```
 
 
@@ -116,7 +116,7 @@ function _state() external view returns (enum DataTypes.TomoV2EntryPointState)
 
 | Name | Type | Description |
 |---|---|---|
-| _0 | enum DataTypes.TomoV2EntryPointState | undefined |
+| _0 | enum DataTypes.TomoV2State | undefined |
 
 ### _tomoSignAddress
 
@@ -357,7 +357,7 @@ set new protocol fee address
 ### setState
 
 ```solidity
-function setState(enum DataTypes.TomoV2EntryPointState newState) external nonpayable
+function setState(enum DataTypes.TomoV2State newState) external nonpayable
 ```
 
 set new state of TomoHubEntryPoint
@@ -368,7 +368,7 @@ set new state of TomoHubEntryPoint
 
 | Name | Type | Description |
 |---|---|---|
-| newState | enum DataTypes.TomoV2EntryPointState | new state |
+| newState | enum DataTypes.TomoV2State | new state |
 
 ### setTomoSignAddress
 
@@ -482,7 +482,7 @@ event ProcotolFeeAddressSet(address indexed caller, address indexed prevProcotol
 ### StateSet
 
 ```solidity
-event StateSet(address indexed caller, enum DataTypes.TomoV2EntryPointState indexed prevState, enum DataTypes.TomoV2EntryPointState indexed newState, uint256 timestamp)
+event StateSet(address indexed caller, enum DataTypes.TomoV2State indexed prevState, enum DataTypes.TomoV2State indexed newState, uint256 timestamp)
 ```
 
 
@@ -494,8 +494,8 @@ event StateSet(address indexed caller, enum DataTypes.TomoV2EntryPointState inde
 | Name | Type | Description |
 |---|---|---|
 | caller `indexed` | address | undefined |
-| prevState `indexed` | enum DataTypes.TomoV2EntryPointState | undefined |
-| newState `indexed` | enum DataTypes.TomoV2EntryPointState | undefined |
+| prevState `indexed` | enum DataTypes.TomoV2State | undefined |
+| newState `indexed` | enum DataTypes.TomoV2State | undefined |
 | timestamp  | uint256 | undefined |
 
 ### TomoSignAddressSet
