@@ -460,10 +460,10 @@ event GovernanceSet(address indexed caller, address indexed prevGovernance, addr
 | newGovernance `indexed` | address | The new governance address set. |
 | timestamp  | uint256 | The current block timestamp. |
 
-### ProcotolFeeAddressSet
+### ProtocolFeeAddressSet
 
 ```solidity
-event ProcotolFeeAddressSet(address indexed caller, address indexed prevProcotolFeeAddress, address indexed newProcotolFeeAddress, uint256 timestamp)
+event ProtocolFeeAddressSet(address indexed caller, address indexed prevProcotolFeeAddress, address indexed newProcotolFeeAddress, uint256 timestamp)
 ```
 
 

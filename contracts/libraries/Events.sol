@@ -21,7 +21,7 @@ library Events {
         uint256 timestamp
     );
 
-    event ProcotolFeeAddressSet(
+    event ProtocolFeeAddressSet(
         address indexed caller,
         address indexed prevProcotolFeeAddress,
         address indexed newProcotolFeeAddress,

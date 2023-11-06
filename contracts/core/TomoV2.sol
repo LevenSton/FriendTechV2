@@ -321,7 +321,7 @@ contract TomoV2 is TomoV2Base, VersionedInitializable, TomoV2Storage, ITomoV2 {
     function _setProtocolFeeAddress(address newProtocolFeeAddress) internal {
         address preProtocolFeeAddress = _protocolFeeAddress;
         _protocolFeeAddress = newProtocolFeeAddress;
-        emit Events.ProcotolFeeAddressSet(
+        emit Events.ProtocolFeeAddressSet(
             msg.sender,
             preProtocolFeeAddress,
             newProtocolFeeAddress,
