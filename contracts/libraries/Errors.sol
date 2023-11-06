@@ -15,4 +15,11 @@ library Errors {
     error SubjectNotInitial();
     error InsufficientKeyAmount();
     error MsgValueNotEnough();
+    error ReferralRatioTooHigh();
+    error FeePercentTooHigh();
+    error NotSupportFunction();
+    error ExceedMaxAcceptPrice();
+    error EthValueNotEnough();
+    error ConstCurveCanSell();
+    error LessThanMinAcceptPrice();
 }

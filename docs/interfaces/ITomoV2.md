@@ -93,6 +93,24 @@ function sellKey(DataTypes.SellKeyData vars) external nonpayable
 |---|---|---|
 | vars | DataTypes.SellKeyData | undefined |
 
+### setCurveFeePercent
+
+```solidity
+function setCurveFeePercent(address curveModuleAddress, uint256 newProtocolFeePercent, uint256 newSubjectFeePercent) external nonpayable
+```
+
+
+
+
+
+#### Parameters
+
+| Name | Type | Description |
+|---|---|---|
+| curveModuleAddress | address | undefined |
+| newProtocolFeePercent | uint256 | undefined |
+| newSubjectFeePercent | uint256 | undefined |
+
 ### setGovernance
 
 ```solidity

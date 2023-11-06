@@ -218,6 +218,24 @@ function sellKey(DataTypes.SellKeyData vars) external nonpayable
 |---|---|---|
 | vars | DataTypes.SellKeyData | undefined |
 
+### setCurveFeePercent
+
+```solidity
+function setCurveFeePercent(address curveModuleAddress, uint256 newProtocolFeePercent, uint256 newSubjectFeePercent) external nonpayable
+```
+
+
+
+
+
+#### Parameters
+
+| Name | Type | Description |
+|---|---|---|
+| curveModuleAddress | address | undefined |
+| newProtocolFeePercent | uint256 | undefined |
+| newSubjectFeePercent | uint256 | undefined |
+
 ### setGovernance
 
 ```solidity
@@ -397,6 +415,28 @@ event TomoSignAddressSet(address indexed caller, address indexed prevTomoSignAdd
 | newTomoSignAddress `indexed` | address | undefined |
 | timestamp  | uint256 | undefined |
 
+### TradeKeySuccess
+
+```solidity
+event TradeKeySuccess(address trader, address subjectAddress, address referralAddress, uint256 amount, uint256 price, uint256 timestamp, bool isBuy)
+```
+
+
+
+
+
+#### Parameters
+
+| Name | Type | Description |
+|---|---|---|
+| trader  | address | undefined |
+| subjectAddress  | address | undefined |
+| referralAddress  | address | undefined |
+| amount  | uint256 | undefined |
+| price  | uint256 | undefined |
+| timestamp  | uint256 | undefined |
+| isBuy  | bool | undefined |
+
 
 
 ## Errors
@@ -416,6 +456,39 @@ error CannotInitImplementation()
 
 ```solidity
 error CurveModuleNotWhitelisted()
+```
+
+
+
+
+
+
+### EthValueNotEnough
+
+```solidity
+error EthValueNotEnough()
+```
+
+
+
+
+
+
+### ExceedMaxAcceptPrice
+
+```solidity
+error ExceedMaxAcceptPrice()
+```
+
+
+
+
+
+
+### FeePercentTooHigh
+
+```solidity
+error FeePercentTooHigh()
 ```
 
 
@@ -445,6 +518,17 @@ error InsufficientKeyAmount()
 
 
 
+### LessThanMinAcceptPrice
+
+```solidity
+error LessThanMinAcceptPrice()
+```
+
+
+
+
+
+
 ### NotGovernance
 
 ```solidity
@@ -460,6 +544,17 @@ error NotGovernance()
 
 ```solidity
 error Paused()
+```
+
+
+
+
+
+
+### SignatureInvalid
+
+```solidity
+error SignatureInvalid()
 ```
 
 

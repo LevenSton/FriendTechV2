@@ -1,10 +1,10 @@
-# ConstCurveModule
+# BondCurveModule
 
 *tomo Protocol*
 
-> ConstCurveModule
+> BondCurveModule
 
-This is a const curve contract, the key price is fixed.
+This is a bonding curve contract, the key price increase model according bond curve.
 
 
 
@@ -168,7 +168,7 @@ function setFeePercent(uint256 newProtocolFeePercent, uint256 newSubjectFeePerce
 ### setSubPrice
 
 ```solidity
-function setSubPrice(address subjectAddress, uint256 newPrice) external nonpayable
+function setSubPrice(address subjectAddress, uint256 price) external nonpayable
 ```
 
 
@@ -180,7 +180,7 @@ function setSubPrice(address subjectAddress, uint256 newPrice) external nonpayab
 | Name | Type | Description |
 |---|---|---|
 | subjectAddress | address | undefined |
-| newPrice | uint256 | undefined |
+| price | uint256 | undefined |
 
 
 
@@ -207,17 +207,6 @@ event ModuleBaseConstructed(address indexed tomoV2, uint256 timestamp)
 
 ## Errors
 
-### ConstCurveCanSell
-
-```solidity
-error ConstCurveCanSell()
-```
-
-
-
-
-
-
 ### InitParamsInvalid
 
 ```solidity
@@ -233,6 +222,17 @@ error InitParamsInvalid()
 
 ```solidity
 error MsgValueNotEnough()
+```
+
+
+
+
+
+
+### NotSupportFunction
+
+```solidity
+error NotSupportFunction()
 ```
 
 

@@ -49,4 +49,14 @@ library Events {
     );
 
     event ModuleBaseConstructed(address indexed tomoV2, uint256 timestamp);
+
+    event TradeKeySuccess(
+        address trader,
+        address subjectAddress,
+        address referralAddress,
+        uint256 amount,
+        uint256 price,
+        uint256 timestamp,
+        bool isBuy
+    );
 }

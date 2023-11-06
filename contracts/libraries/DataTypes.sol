@@ -39,8 +39,10 @@ library DataTypes {
 
     struct BuyKeyData {
         address keySubject;
+        address referralAddress;
         uint256 amount;
         uint256 maxAcceptPrice;
+        EIP712Signature sig;
     }
 
     struct SellKeyData {

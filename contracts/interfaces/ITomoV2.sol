@@ -57,6 +57,12 @@ interface ITomoV2 {
 
     function whitelistCurveModule(address curveModule, bool whitelist) external;
 
+    function setCurveFeePercent(
+        address curveModuleAddress,
+        uint256 newProtocolFeePercent,
+        uint256 newSubjectFeePercent
+    ) external;
+
     /// ***********************
     /// *****EXTERNAL FUNCTIONS*****
     /// ***********************

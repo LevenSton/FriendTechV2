@@ -12,6 +12,7 @@ import {Errors} from "../libraries/Errors.sol";
 import {Events} from "../libraries/Events.sol";
 
 contract TomoV2 is TomoV2Base, VersionedInitializable, TomoV2Storage, ITomoV2 {
+    uint256 internal constant BPS_MAX = 10000;
     uint256 internal constant REVISION = 1;
 
     modifier onlyGov() {
@@ -66,11 +67,21 @@ contract TomoV2 is TomoV2Base, VersionedInitializable, TomoV2Storage, ITomoV2 {
         address curveModule,
         bool whitelist
     ) external override onlyGov {
-        _curveModuleWhitelisted[curveModule] = whitelist;
-        emit Events.CurveModuleWhitelisted(
-            curveModule,
-            whitelist,
-            block.timestamp
+        _whitelistCurveModule(curveModule, whitelist);
+    }
+
+    function setCurveFeePercent(
+        address curveModuleAddress,
+        uint256 newProtocolFeePercent,
+        uint256 newSubjectFeePercent
+    ) external override onlyGov {
+        if (!_curveModuleWhitelisted[curveModuleAddress])
+            revert Errors.CurveModuleNotWhitelisted();
+        if (newProtocolFeePercent > 1000 || newSubjectFeePercent > 1000)
+            revert Errors.FeePercentTooHigh();
+        ICurveModule(curveModuleAddress).setFeePercent(
+            newProtocolFeePercent,
+            newSubjectFeePercent
         );
     }
 
@@ -97,14 +108,53 @@ contract TomoV2 is TomoV2Base, VersionedInitializable, TomoV2Storage, ITomoV2 {
     ) external payable override whenNotPaused {
         if (_keySubjectInfo[msg.sender].curveModule == address(0))
             revert Errors.SubjectNotInitial();
+
+        unchecked {
+            _validateRecoveredAddress(
+                _calculateDigest(
+                    keccak256(
+                        abi.encode(
+                            BUY_TYPEHASH,
+                            vars.keySubject,
+                            msg.sender,
+                            vars.amount
+                        )
+                    )
+                ),
+                _tomoSignAddress,
+                vars.sig
+            );
+        }
         //check if can buy from corresponding curve module contract
-        ICurveModule(_keySubjectInfo[vars.keySubject].curveModule).processBuy(
-            vars.keySubject,
-            vars.amount,
-            msg.value
+        (
+            uint256 price,
+            uint256 referralRatio,
+            uint256 protocolFeePercent,
+            uint256 subjectFeePercent
+        ) = ICurveModule(_keySubjectInfo[vars.keySubject].curveModule)
+                .processBuy(vars.keySubject, vars.amount, msg.value);
+
+        if (msg.value < price) revert Errors.EthValueNotEnough();
+        if (price > vars.maxAcceptPrice) revert Errors.ExceedMaxAcceptPrice();
+        if (msg.value > price) {
+            payable(msg.sender).transfer(msg.value - price);
+        }
+        _updateFeeAndAmount(
+            vars,
+            price,
+            referralRatio,
+            protocolFeePercent,
+            subjectFeePercent
         );
-        _keySubjectInfo[vars.keySubject].supply += vars.amount;
-        _keySubjectInfo[vars.keySubject].balanceOf[msg.sender] += vars.amount;
+        emit Events.TradeKeySuccess(
+            msg.sender,
+            vars.keySubject,
+            vars.referralAddress,
+            vars.amount,
+            price,
+            block.timestamp,
+            true
+        );
     }
 
     function sellKey(
@@ -117,14 +167,35 @@ contract TomoV2 is TomoV2Base, VersionedInitializable, TomoV2Storage, ITomoV2 {
         ) revert Errors.InsufficientKeyAmount();
 
         //check if can sell from corresponding curve module contract
-        ICurveModule(_keySubjectInfo[vars.keySubject].curveModule).processSell(
-            vars.keySubject,
-            vars.amount
-        );
+        (
+            uint256 price,
+            uint256 protocolFeePercent,
+            uint256 subjectFeePercent
+        ) = ICurveModule(_keySubjectInfo[vars.keySubject].curveModule)
+                .processSell(vars.keySubject, vars.amount);
+
+        if (price < vars.minAcceptPrice) revert Errors.LessThanMinAcceptPrice();
+
         _keySubjectInfo[vars.keySubject].supply -= vars.amount;
         _keySubjectInfo[vars.keySubject].balanceOf[msg.sender] -= vars.amount;
         if (_keySubjectInfo[vars.keySubject].balanceOf[msg.sender] == 0)
             delete _keySubjectInfo[vars.keySubject].balanceOf[msg.sender];
+
+        uint256 protocolFee = (price * protocolFeePercent) / BPS_MAX;
+        payable(_protocolFeeAddress).transfer(protocolFee);
+        uint256 subjectFee = (price * subjectFeePercent) / BPS_MAX;
+        payable(vars.keySubject).transfer(subjectFee);
+        uint256 sellValue = price - protocolFee - subjectFee;
+        payable(msg.sender).transfer(sellValue);
+        emit Events.TradeKeySuccess(
+            msg.sender,
+            vars.keySubject,
+            address(0),
+            vars.amount,
+            price,
+            block.timestamp,
+            false
+        );
     }
 
     /// ****************************
@@ -138,6 +209,27 @@ contract TomoV2 is TomoV2Base, VersionedInitializable, TomoV2Storage, ITomoV2 {
     /// ****************************
     /// *****INTERNAL FUNCTIONS*****
     /// ****************************
+
+    function _updateFeeAndAmount(
+        DataTypes.BuyKeyData calldata vars,
+        uint256 price,
+        uint256 referralRatio,
+        uint256 protocolFeePercent,
+        uint256 subjectFeePercent
+    ) internal {
+        _keySubjectInfo[vars.keySubject].supply += vars.amount;
+        _keySubjectInfo[vars.keySubject].balanceOf[msg.sender] += vars.amount;
+
+        uint256 protocolFee = (price * protocolFeePercent) / BPS_MAX;
+        payable(_protocolFeeAddress).transfer(protocolFee);
+        uint256 subjectFee = (price * subjectFeePercent) / BPS_MAX;
+        uint256 referralFee = 0;
+        if (vars.referralAddress != address(0)) {
+            referralFee = (subjectFee * referralRatio) / BPS_MAX;
+            payable(vars.referralAddress).transfer(referralFee);
+        }
+        payable(vars.keySubject).transfer(subjectFee - referralFee);
+    }
 
     function _setGovernance(address newGovernance) internal {
         address prevGovernance = _governance;
@@ -180,6 +272,18 @@ contract TomoV2 is TomoV2Base, VersionedInitializable, TomoV2Storage, ITomoV2 {
         DataTypes.TomoV2EntryPointState prevState = _state;
         _state = newState;
         emit Events.StateSet(msg.sender, prevState, newState, block.timestamp);
+    }
+
+    function _whitelistCurveModule(
+        address curveModule,
+        bool whitelist
+    ) internal {
+        _curveModuleWhitelisted[curveModule] = whitelist;
+        emit Events.CurveModuleWhitelisted(
+            curveModule,
+            whitelist,
+            block.timestamp
+        );
     }
 
     function getRevision() internal pure virtual override returns (uint256) {

@@ -1,10 +1,10 @@
-# ConstCurveModule
+# LinearCurveModule
 
 *tomo Protocol*
 
-> ConstCurveModule
+> LinearCurveModule
 
-This is a const curve contract, the key price is fixed.
+This is a linear curve contract, the key price increase model according lineae curve.
 
 
 
@@ -207,17 +207,6 @@ event ModuleBaseConstructed(address indexed tomoV2, uint256 timestamp)
 
 ## Errors
 
-### ConstCurveCanSell
-
-```solidity
-error ConstCurveCanSell()
-```
-
-
-
-
-
-
 ### InitParamsInvalid
 
 ```solidity
@@ -233,6 +222,17 @@ error InitParamsInvalid()
 
 ```solidity
 error MsgValueNotEnough()
+```
+
+
+
+
+
+
+### NotSupportFunction
+
+```solidity
+error NotSupportFunction()
 ```
 
 

@@ -82,7 +82,7 @@ initialize smart contract.
 ### processBuy
 
 ```solidity
-function processBuy(address subjectAddress, uint256 amount, uint256 msgValue) external nonpayable returns (uint256)
+function processBuy(address subjectAddress, uint256 amount, uint256 msgValue) external nonpayable returns (uint256, uint256, uint256, uint256)
 ```
 
 
@@ -102,11 +102,14 @@ function processBuy(address subjectAddress, uint256 amount, uint256 msgValue) ex
 | Name | Type | Description |
 |---|---|---|
 | _0 | uint256 | undefined |
+| _1 | uint256 | undefined |
+| _2 | uint256 | undefined |
+| _3 | uint256 | undefined |
 
 ### processSell
 
 ```solidity
-function processSell(address subjectAddress, uint256 amount) external nonpayable
+function processSell(address subjectAddress, uint256 amount) external nonpayable returns (uint256, uint256, uint256)
 ```
 
 
@@ -119,6 +122,48 @@ function processSell(address subjectAddress, uint256 amount) external nonpayable
 |---|---|---|
 | subjectAddress | address | undefined |
 | amount | uint256 | undefined |
+
+#### Returns
+
+| Name | Type | Description |
+|---|---|---|
+| _0 | uint256 | undefined |
+| _1 | uint256 | undefined |
+| _2 | uint256 | undefined |
+
+### setFeePercent
+
+```solidity
+function setFeePercent(uint256 newProtocolFeePercent, uint256 newSubjectFeePercent) external nonpayable
+```
+
+
+
+
+
+#### Parameters
+
+| Name | Type | Description |
+|---|---|---|
+| newProtocolFeePercent | uint256 | undefined |
+| newSubjectFeePercent | uint256 | undefined |
+
+### setSubPrice
+
+```solidity
+function setSubPrice(address subjectAddress, uint256 price) external nonpayable
+```
+
+
+
+
+
+#### Parameters
+
+| Name | Type | Description |
+|---|---|---|
+| subjectAddress | address | undefined |
+| price | uint256 | undefined |
 
 
 
