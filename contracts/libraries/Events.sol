@@ -59,4 +59,12 @@ library Events {
         uint256 timestamp,
         bool isBuy
     );
+
+    event TransferKeySuccess(
+        address from,
+        address to,
+        address subject,
+        uint256 amount,
+        uint256 timestamp
+    );
 }

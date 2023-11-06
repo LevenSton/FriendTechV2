@@ -33,7 +33,7 @@ function TOMOV2() external view returns (address)
 function getBuyPrice(address subjectAddress, uint256 amount) external view returns (uint256)
 ```
 
-
+get the price of buy amount key
 
 
 
@@ -41,8 +41,8 @@ function getBuyPrice(address subjectAddress, uint256 amount) external view retur
 
 | Name | Type | Description |
 |---|---|---|
-| subjectAddress | address | undefined |
-| amount | uint256 | undefined |
+| subjectAddress | address | Address of subject |
+| amount | uint256 | buy amount |
 
 #### Returns
 
@@ -56,7 +56,7 @@ function getBuyPrice(address subjectAddress, uint256 amount) external view retur
 function getSellPrice(address subjectAddress, uint256 amount) external view returns (uint256)
 ```
 
-
+get the price of sell amount key
 
 
 
@@ -64,8 +64,8 @@ function getSellPrice(address subjectAddress, uint256 amount) external view retu
 
 | Name | Type | Description |
 |---|---|---|
-| subjectAddress | address | undefined |
-| amount | uint256 | undefined |
+| subjectAddress | address | Address of subject |
+| amount | uint256 | sell amount |
 
 #### Returns
 
@@ -79,7 +79,7 @@ function getSellPrice(address subjectAddress, uint256 amount) external view retu
 function initializeCurveModule(address subjectAddress, bytes data) external nonpayable returns (bytes)
 ```
 
-
+Initial curve when initial subject.
 
 
 
@@ -87,8 +87,8 @@ function initializeCurveModule(address subjectAddress, bytes data) external nonp
 
 | Name | Type | Description |
 |---|---|---|
-| subjectAddress | address | undefined |
-| data | bytes | undefined |
+| subjectAddress | address | Address of subject |
+| data | bytes | the initial data for curve |
 
 #### Returns
 
@@ -102,7 +102,7 @@ function initializeCurveModule(address subjectAddress, bytes data) external nonp
 function processBuy(address subjectAddress, uint256 amount, uint256 msgValue) external nonpayable returns (uint256, uint256, uint256, uint256)
 ```
 
-
+Check if can buy success from the rule of curve.
 
 
 
@@ -110,9 +110,9 @@ function processBuy(address subjectAddress, uint256 amount, uint256 msgValue) ex
 
 | Name | Type | Description |
 |---|---|---|
-| subjectAddress | address | undefined |
-| amount | uint256 | undefined |
-| msgValue | uint256 | undefined |
+| subjectAddress | address | Address of subject |
+| amount | uint256 | the buy amount |
+| msgValue | uint256 | the eth amount user used to buy |
 
 #### Returns
 
@@ -129,7 +129,7 @@ function processBuy(address subjectAddress, uint256 amount, uint256 msgValue) ex
 function processSell(address subjectAddress, uint256 amount) external nonpayable returns (uint256, uint256, uint256)
 ```
 
-
+Check if can sell success from the rule of curve.
 
 
 
@@ -137,8 +137,8 @@ function processSell(address subjectAddress, uint256 amount) external nonpayable
 
 | Name | Type | Description |
 |---|---|---|
-| subjectAddress | address | undefined |
-| amount | uint256 | undefined |
+| subjectAddress | address | Address of subject |
+| amount | uint256 | the buy amount |
 
 #### Returns
 
@@ -154,7 +154,7 @@ function processSell(address subjectAddress, uint256 amount) external nonpayable
 function processTransfer() external pure returns (bool)
 ```
 
-
+return if key can transfer or not.
 
 
 
@@ -171,7 +171,7 @@ function processTransfer() external pure returns (bool)
 function setCustomizeFeePercent(address subjectAddress, uint256 newProtocolFeePercent, uint256 newSubjectFeePercent) external nonpayable
 ```
 
-
+set customize fee percent for KOL, only can be called from TomoV2 contract
 
 
 
@@ -179,9 +179,9 @@ function setCustomizeFeePercent(address subjectAddress, uint256 newProtocolFeePe
 
 | Name | Type | Description |
 |---|---|---|
-| subjectAddress | address | undefined |
-| newProtocolFeePercent | uint256 | undefined |
-| newSubjectFeePercent | uint256 | undefined |
+| subjectAddress | address | Address of subject |
+| newProtocolFeePercent | uint256 | the new protocol fee percent |
+| newSubjectFeePercent | uint256 | the new subject fee percent |
 
 ### setFeePercent
 
@@ -189,7 +189,7 @@ function setCustomizeFeePercent(address subjectAddress, uint256 newProtocolFeePe
 function setFeePercent(uint256 newProtocolFeePercent, uint256 newSubjectFeePercent) external nonpayable
 ```
 
-
+set normal fee percent for users
 
 
 
@@ -197,8 +197,8 @@ function setFeePercent(uint256 newProtocolFeePercent, uint256 newSubjectFeePerce
 
 | Name | Type | Description |
 |---|---|---|
-| newProtocolFeePercent | uint256 | undefined |
-| newSubjectFeePercent | uint256 | undefined |
+| newProtocolFeePercent | uint256 | the new protocol fee percent |
+| newSubjectFeePercent | uint256 | the new subject fee percent |
 
 ### setSubPrice
 
@@ -206,7 +206,7 @@ function setFeePercent(uint256 newProtocolFeePercent, uint256 newSubjectFeePerce
 function setSubPrice(address subjectAddress, uint256 newPrice) external nonpayable
 ```
 
-
+set a new subscribe price by subject owner. only support const curve module
 
 
 
@@ -214,7 +214,7 @@ function setSubPrice(address subjectAddress, uint256 newPrice) external nonpayab
 
 | Name | Type | Description |
 |---|---|---|
-| subjectAddress | address | undefined |
+| subjectAddress | address | Address of subject |
 | newPrice | uint256 | undefined |
 
 

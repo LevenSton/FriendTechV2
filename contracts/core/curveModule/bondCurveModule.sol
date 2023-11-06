@@ -21,7 +21,6 @@ struct CustomizeFeePercent {
  *
  * @notice This is a bonding curve contract, the key price increase model according bond curve.
  */
-
 contract BondCurveModule is ModuleBase, ICurveModule {
     mapping(address => BondCurveData) internal _dataBondCurveBySubjectAddress;
     mapping(address => CustomizeFeePercent) internal _customizeFeePercent;
@@ -34,6 +33,7 @@ contract BondCurveModule is ModuleBase, ICurveModule {
         subjectFeePercent = 500; // 5%
     }
 
+    /// @inheritdoc ICurveModule
     function initializeCurveModule(
         address subjectAddress,
         bytes calldata data
@@ -48,6 +48,7 @@ contract BondCurveModule is ModuleBase, ICurveModule {
         return data;
     }
 
+    /// @inheritdoc ICurveModule
     function processBuy(
         address subjectAddress,
         uint256 amount,
@@ -85,6 +86,7 @@ contract BondCurveModule is ModuleBase, ICurveModule {
         );
     }
 
+    /// @inheritdoc ICurveModule
     function processSell(
         address subjectAddress,
         uint256 amount
@@ -110,10 +112,12 @@ contract BondCurveModule is ModuleBase, ICurveModule {
         return (price, retProtoFeePercent, retSubjectFeePercent);
     }
 
+    /// @inheritdoc ICurveModule
     function processTransfer() external pure override returns (bool) {
         return true;
     }
 
+    /// @inheritdoc ICurveModule
     function setSubPrice(
         address subjectAddress,
         uint256 price
@@ -121,6 +125,7 @@ contract BondCurveModule is ModuleBase, ICurveModule {
         revert Errors.NotSupportFunction();
     }
 
+    /// @inheritdoc ICurveModule
     function setCustomizeFeePercent(
         address subjectAddress,
         uint256 newProtocolFeePercent,
@@ -132,6 +137,7 @@ contract BondCurveModule is ModuleBase, ICurveModule {
         );
     }
 
+    /// @inheritdoc ICurveModule
     function setFeePercent(
         uint256 newProtocolFeePercent,
         uint256 newSubjectFeePercent
@@ -140,6 +146,7 @@ contract BondCurveModule is ModuleBase, ICurveModule {
         subjectFeePercent = newSubjectFeePercent;
     }
 
+    /// @inheritdoc ICurveModule
     function getBuyPrice(
         address subjectAddress,
         uint256 amount
@@ -151,6 +158,7 @@ contract BondCurveModule is ModuleBase, ICurveModule {
             );
     }
 
+    /// @inheritdoc ICurveModule
     function getSellPrice(
         address subjectAddress,
         uint256 amount

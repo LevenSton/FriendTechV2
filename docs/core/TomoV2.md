@@ -157,7 +157,7 @@ function buyKey(DataTypes.BuyKeyData vars) external payable
 function getDomainSeparator() external view returns (bytes32)
 ```
 
-**************************** *****QUERY VIEW FUNCTIONS*** ****************************
+*********************** *****VIEW FUNCTIONS***** ***********************
 
 
 
@@ -224,7 +224,7 @@ function sellKey(DataTypes.SellKeyData vars) external nonpayable
 function setCurveFeePercent(address curveModuleAddress, uint256 newProtocolFeePercent, uint256 newSubjectFeePercent) external nonpayable
 ```
 
-
+change fee percentage of curve contract
 
 
 
@@ -232,9 +232,9 @@ function setCurveFeePercent(address curveModuleAddress, uint256 newProtocolFeePe
 
 | Name | Type | Description |
 |---|---|---|
-| curveModuleAddress | address | undefined |
-| newProtocolFeePercent | uint256 | undefined |
-| newSubjectFeePercent | uint256 | undefined |
+| curveModuleAddress | address | address of curve contract |
+| newProtocolFeePercent | uint256 | new percentage of protocol |
+| newSubjectFeePercent | uint256 | new percentage of subject |
 
 ### setCustomizeFeePercent
 
@@ -242,7 +242,7 @@ function setCurveFeePercent(address curveModuleAddress, uint256 newProtocolFeePe
 function setCustomizeFeePercent(address curveModuleAddress, address subjectAddress, uint256 newProtocolFeePercent, uint256 newSubjectFeePercent) external nonpayable
 ```
 
-
+set customize fee percent for KOL
 
 
 
@@ -250,10 +250,10 @@ function setCustomizeFeePercent(address curveModuleAddress, address subjectAddre
 
 | Name | Type | Description |
 |---|---|---|
-| curveModuleAddress | address | undefined |
-| subjectAddress | address | undefined |
-| newProtocolFeePercent | uint256 | undefined |
-| newSubjectFeePercent | uint256 | undefined |
+| curveModuleAddress | address | address of curve contract |
+| subjectAddress | address | Address of subject |
+| newProtocolFeePercent | uint256 | the new protocol fee percent |
+| newSubjectFeePercent | uint256 | the new subject fee percent |
 
 ### setGovernance
 
@@ -261,7 +261,7 @@ function setCustomizeFeePercent(address curveModuleAddress, address subjectAddre
 function setGovernance(address newGovernance) external nonpayable
 ```
 
-*********************** *****GOV FUNCTIONS***** ***********************
+set new governance address
 
 
 
@@ -269,7 +269,7 @@ function setGovernance(address newGovernance) external nonpayable
 
 | Name | Type | Description |
 |---|---|---|
-| newGovernance | address | undefined |
+| newGovernance | address | new address |
 
 ### setProtocolFeeAddress
 
@@ -341,7 +341,7 @@ function transferKey(DataTypes.TransferKeyData vars) external nonpayable
 function whitelistCurveModule(address curveModule, bool whitelist) external nonpayable
 ```
 
-
+set whitelist curve module address
 
 
 
@@ -349,8 +349,8 @@ function whitelistCurveModule(address curveModule, bool whitelist) external nonp
 
 | Name | Type | Description |
 |---|---|---|
-| curveModule | address | undefined |
-| whitelist | bool | undefined |
+| curveModule | address | address of curve contract |
+| whitelist | bool | whitelist or not |
 
 
 
@@ -471,6 +471,26 @@ event TradeKeySuccess(address trader, address subjectAddress, address referralAd
 | price  | uint256 | undefined |
 | timestamp  | uint256 | undefined |
 | isBuy  | bool | undefined |
+
+### TransferKeySuccess
+
+```solidity
+event TransferKeySuccess(address from, address to, address subject, uint256 amount, uint256 timestamp)
+```
+
+
+
+
+
+#### Parameters
+
+| Name | Type | Description |
+|---|---|---|
+| from  | address | undefined |
+| to  | address | undefined |
+| subject  | address | undefined |
+| amount  | uint256 | undefined |
+| timestamp  | uint256 | undefined |
 
 
 

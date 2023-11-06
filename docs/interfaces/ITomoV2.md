@@ -99,7 +99,7 @@ function sellKey(DataTypes.SellKeyData vars) external nonpayable
 function setCurveFeePercent(address curveModuleAddress, uint256 newProtocolFeePercent, uint256 newSubjectFeePercent) external nonpayable
 ```
 
-
+change fee percentage of curve contract
 
 
 
@@ -107,9 +107,9 @@ function setCurveFeePercent(address curveModuleAddress, uint256 newProtocolFeePe
 
 | Name | Type | Description |
 |---|---|---|
-| curveModuleAddress | address | undefined |
-| newProtocolFeePercent | uint256 | undefined |
-| newSubjectFeePercent | uint256 | undefined |
+| curveModuleAddress | address | address of curve contract |
+| newProtocolFeePercent | uint256 | new percentage of protocol |
+| newSubjectFeePercent | uint256 | new percentage of subject |
 
 ### setCustomizeFeePercent
 
@@ -117,7 +117,7 @@ function setCurveFeePercent(address curveModuleAddress, uint256 newProtocolFeePe
 function setCustomizeFeePercent(address curveModuleAddress, address subjectAddress, uint256 newProtocolFeePercent, uint256 newSubjectFeePercent) external nonpayable
 ```
 
-
+set customize fee percent for KOL
 
 
 
@@ -125,10 +125,10 @@ function setCustomizeFeePercent(address curveModuleAddress, address subjectAddre
 
 | Name | Type | Description |
 |---|---|---|
-| curveModuleAddress | address | undefined |
-| subjectAddress | address | undefined |
-| newProtocolFeePercent | uint256 | undefined |
-| newSubjectFeePercent | uint256 | undefined |
+| curveModuleAddress | address | address of curve contract |
+| subjectAddress | address | Address of subject |
+| newProtocolFeePercent | uint256 | the new protocol fee percent |
+| newSubjectFeePercent | uint256 | the new subject fee percent |
 
 ### setGovernance
 
@@ -216,7 +216,7 @@ function transferKey(DataTypes.TransferKeyData vars) external nonpayable
 function whitelistCurveModule(address curveModule, bool whitelist) external nonpayable
 ```
 
-
+set whitelist curve module address
 
 
 
@@ -224,8 +224,8 @@ function whitelistCurveModule(address curveModule, bool whitelist) external nonp
 
 | Name | Type | Description |
 |---|---|---|
-| curveModule | address | undefined |
-| whitelist | bool | undefined |
+| curveModule | address | address of curve contract |
+| whitelist | bool | whitelist or not |
 
 
 

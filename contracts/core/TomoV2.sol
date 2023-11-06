@@ -41,28 +41,33 @@ contract TomoV2 is TomoV2Base, VersionedInitializable, TomoV2Storage, ITomoV2 {
     /// *****GOV FUNCTIONS*****
     /// ***********************
 
+    /// @inheritdoc ITomoV2
     function setGovernance(address newGovernance) external override onlyGov {
         _setGovernance(newGovernance);
     }
 
+    /// @inheritdoc ITomoV2
     function setProtocolFeeAddress(
         address newProtocolFeeAddress
     ) external override onlyGov {
         _setProtocolFeeAddress(newProtocolFeeAddress);
     }
 
+    /// @inheritdoc ITomoV2
     function setTomoSignAddress(
         address newTomoSignAddress
     ) external override onlyGov {
         _setTomoSignAddress(newTomoSignAddress);
     }
 
+    /// @inheritdoc ITomoV2
     function setState(
         DataTypes.TomoV2EntryPointState newState
     ) external override onlyGov {
         _setState(newState);
     }
 
+    /// @inheritdoc ITomoV2
     function whitelistCurveModule(
         address curveModule,
         bool whitelist
@@ -70,6 +75,7 @@ contract TomoV2 is TomoV2Base, VersionedInitializable, TomoV2Storage, ITomoV2 {
         _whitelistCurveModule(curveModule, whitelist);
     }
 
+    /// @inheritdoc ITomoV2
     function setCurveFeePercent(
         address curveModuleAddress,
         uint256 newProtocolFeePercent,
@@ -85,6 +91,7 @@ contract TomoV2 is TomoV2Base, VersionedInitializable, TomoV2Storage, ITomoV2 {
         );
     }
 
+    /// @inheritdoc ITomoV2
     function setCustomizeFeePercent(
         address curveModuleAddress,
         address subjectAddress,
@@ -106,6 +113,7 @@ contract TomoV2 is TomoV2Base, VersionedInitializable, TomoV2Storage, ITomoV2 {
     /// *****EXTERNAL FUNCTIONS***
     /// ****************************
 
+    /// @inheritdoc ITomoV2
     function initialSubject(
         DataTypes.InitialSubjectData calldata vars
     ) external override whenNotPaused {
@@ -120,6 +128,7 @@ contract TomoV2 is TomoV2Base, VersionedInitializable, TomoV2Storage, ITomoV2 {
         );
     }
 
+    /// @inheritdoc ITomoV2
     function buyKey(
         DataTypes.BuyKeyData calldata vars
     ) external payable override whenNotPaused {
@@ -174,6 +183,7 @@ contract TomoV2 is TomoV2Base, VersionedInitializable, TomoV2Storage, ITomoV2 {
         );
     }
 
+    /// @inheritdoc ITomoV2
     function sellKey(
         DataTypes.SellKeyData calldata vars
     ) external override whenNotPaused {
@@ -215,6 +225,7 @@ contract TomoV2 is TomoV2Base, VersionedInitializable, TomoV2Storage, ITomoV2 {
         );
     }
 
+    /// @inheritdoc ITomoV2
     function transferKey(
         DataTypes.TransferKeyData calldata vars
     ) external override {
@@ -231,12 +242,20 @@ contract TomoV2 is TomoV2Base, VersionedInitializable, TomoV2Storage, ITomoV2 {
 
         _keySubjectInfo[vars.keySubject].balanceOf[msg.sender] -= vars.amount;
         _keySubjectInfo[vars.keySubject].balanceOf[vars.to] += vars.amount;
+        emit Events.TransferKeySuccess(
+            msg.sender,
+            vars.to,
+            vars.keySubject,
+            vars.amount,
+            block.timestamp
+        );
     }
 
     /// ****************************
     /// *****QUERY VIEW FUNCTIONS***
     /// ****************************
 
+    /// @inheritdoc ITomoV2
     function getDomainSeparator() external view override returns (bytes32) {
         return _calculateDomainSeparator();
     }

@@ -55,14 +55,35 @@ interface ITomoV2 {
      */
     function setState(DataTypes.TomoV2EntryPointState newState) external;
 
+    /**
+     * @notice set whitelist curve module address
+     *
+     * @param curveModule address of curve contract
+     * @param whitelist whitelist or not
+     */
     function whitelistCurveModule(address curveModule, bool whitelist) external;
 
+    /**
+     * @notice change fee percentage of curve contract
+     *
+     * @param curveModuleAddress address of curve contract
+     * @param newProtocolFeePercent new percentage of protocol
+     * @param newSubjectFeePercent new percentage of subject
+     */
     function setCurveFeePercent(
         address curveModuleAddress,
         uint256 newProtocolFeePercent,
         uint256 newSubjectFeePercent
     ) external;
 
+    /**
+     * @notice set customize fee percent for KOL
+     *
+     * @param curveModuleAddress address of curve contract
+     * @param subjectAddress Address of subject
+     * @param newProtocolFeePercent the new protocol fee percent
+     * @param newSubjectFeePercent the new subject fee percent
+     */
     function setCustomizeFeePercent(
         address curveModuleAddress,
         address subjectAddress,
@@ -74,14 +95,47 @@ interface ITomoV2 {
     /// *****EXTERNAL FUNCTIONS*****
     /// ***********************
 
+    /**
+     * @notice initial subject when user want to jump into tomo
+     *
+     * @param vars A InitialSubjectData struct containing the following params:
+     *      curveModule: The address of curve module contract.
+     *      curveModuleInitData: The curve module initialization data, if any.
+     */
     function initialSubject(
         DataTypes.InitialSubjectData calldata vars
     ) external;
 
+    /**
+     * @notice buy some key of subject
+     *
+     * @param vars A BuyKeyData struct containing the following params:
+     *      keySubject: The address of subject
+     *      referralAddress: The address of referral user, if any
+     *      amount: buy amount
+     *      maxAcceptPrice: The max price user can accept
+     *      sig: The sign of tomo sign
+     */
     function buyKey(DataTypes.BuyKeyData calldata vars) external payable;
 
+    /**
+     * @notice sell some key of subject
+     *
+     * @param vars A SellKeyData struct containing the following params:
+     *      keySubject: The address of subject
+     *      amount: sell amount
+     *      minAcceptPrice: The min price user can accept
+     */
     function sellKey(DataTypes.SellKeyData calldata vars) external;
 
+    /**
+     * @notice transfer some key to other user
+     *
+     * @param vars A TransferKeyData struct containing the following params:
+     *      keySubject: The address of subject
+     *      to: The address who receive key
+     *      amount: The transfer amount
+     */
     function transferKey(DataTypes.TransferKeyData calldata vars) external;
 
     /// ***********************

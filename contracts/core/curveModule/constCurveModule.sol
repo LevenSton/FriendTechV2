@@ -35,6 +35,7 @@ contract ConstCurveModule is ModuleBase, ICurveModule {
         subjectFeePercent = 8000; //80%
     }
 
+    /// @inheritdoc ICurveModule
     function initializeCurveModule(
         address subjectAddress,
         bytes calldata data
@@ -54,6 +55,7 @@ contract ConstCurveModule is ModuleBase, ICurveModule {
         return data;
     }
 
+    /// @inheritdoc ICurveModule
     function processBuy(
         address subjectAddress,
         uint256 amount,
@@ -90,6 +92,7 @@ contract ConstCurveModule is ModuleBase, ICurveModule {
         );
     }
 
+    /// @inheritdoc ICurveModule
     function processSell(
         address subjectAddress,
         uint256 amount
@@ -97,10 +100,12 @@ contract ConstCurveModule is ModuleBase, ICurveModule {
         revert Errors.ConstCurveCanSell();
     }
 
+    /// @inheritdoc ICurveModule
     function processTransfer() external pure override returns (bool) {
         return false;
     }
 
+    /// @inheritdoc ICurveModule
     function setSubPrice(
         address subjectAddress,
         uint256 newPrice
@@ -108,6 +113,7 @@ contract ConstCurveModule is ModuleBase, ICurveModule {
         _dataConstCurveBySubjectAddress[subjectAddress].price = newPrice;
     }
 
+    /// @inheritdoc ICurveModule
     function setFeePercent(
         uint256 newProtocolFeePercent,
         uint256 newSubjectFeePercent
@@ -116,6 +122,7 @@ contract ConstCurveModule is ModuleBase, ICurveModule {
         subjectFeePercent = newSubjectFeePercent;
     }
 
+    /// @inheritdoc ICurveModule
     function setCustomizeFeePercent(
         address subjectAddress,
         uint256 newProtocolFeePercent,
@@ -127,6 +134,7 @@ contract ConstCurveModule is ModuleBase, ICurveModule {
         );
     }
 
+    /// @inheritdoc ICurveModule
     function getBuyPrice(
         address subjectAddress,
         uint256 amount
@@ -134,6 +142,7 @@ contract ConstCurveModule is ModuleBase, ICurveModule {
         return _dataConstCurveBySubjectAddress[subjectAddress].price * amount;
     }
 
+    /// @inheritdoc ICurveModule
     function getSellPrice(
         address subjectAddress,
         uint256 amount
