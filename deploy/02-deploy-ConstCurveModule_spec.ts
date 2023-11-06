@@ -19,13 +19,13 @@ const deployFn: DeployFunction = async (hre) => {
   
   await deployAndVerifyAndThen({
       hre,
-      name: "ConstCuveModule",
-      contract: 'ConstCuveModule',
+      name: "ConstCurveModule",
+      contract: 'ConstCurveModule',
       args: [TomoV2Proxy.address],
   })
 }
 
 // This is kept during an upgrade. So no upgrade tag.
-deployFn.tags = ['ConstCuveModule']
+deployFn.tags = ['ConstCurveModule']
 
 export default deployFn

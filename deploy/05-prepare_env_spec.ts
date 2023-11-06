@@ -17,23 +17,23 @@ const deployFn: DeployFunction = async (hre) => {
     }
   )
 
-  const ConstCuveModule = await getContractFromArtifact(
+  const ConstCurveModule = await getContractFromArtifact(
     hre,
-    "ConstCuveModule"
+    "ConstCurveModule"
   )
-  const LinearCuveModule = await getContractFromArtifact(
+  const LinearCurveModule = await getContractFromArtifact(
     hre,
-    "LinearCuveModule"
+    "LinearCurveModule"
   )
-  const BondCuveModule = await getContractFromArtifact(
+  const BondCurveModule = await getContractFromArtifact(
     hre,
-    "BondCuveModule"
+    "BondCurveModule"
   )
 
   //set three curve module to be whitelist
-  await TomoV2Proxy.whitelistCurveModule(ConstCuveModule.address, true);
-  await TomoV2Proxy.whitelistCurveModule(LinearCuveModule.address, true);
-  await TomoV2Proxy.whitelistCurveModule(BondCuveModule.address, true);
+  await TomoV2Proxy.whitelistCurveModule(ConstCurveModule.address, true);
+  await TomoV2Proxy.whitelistCurveModule(LinearCurveModule.address, true);
+  await TomoV2Proxy.whitelistCurveModule(BondCurveModule.address, true);
 
   //set state to open
   await TomoV2Proxy.setState(0);
