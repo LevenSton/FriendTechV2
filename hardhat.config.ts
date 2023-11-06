@@ -8,6 +8,7 @@ dotenv.config()
 
 const deployer = process.env.DEPLOY_PRIVATE_KEY || '0x' + '11'.repeat(32)
 const governance = process.env.GOVERNANCE_PRIVATE_KEY || '0x' + '11'.repeat(32)
+const tomoSign = process.env.TOMOSIGN_PRIVATE_KEY || '0x' + '11'.repeat(32)
 
 const config: HardhatUserConfig = {
   solidity: {
@@ -33,13 +34,13 @@ const config: HardhatUserConfig = {
     lineaTest: {
       chainId: 59140,
       url: process.env.LINEA_TEST_RPC_URL || '',
-      accounts: [deployer, governance],
+      accounts: [deployer, governance, tomoSign],
       gasPrice: 1000000000,
     },
     linea: {
       chainId: 59144,
       url: process.env.LINEA_RPC_URL || '',
-      accounts: [deployer, governance],
+      accounts: [deployer, governance, tomoSign],
       gasPrice: 1000000000,
     },
   },
@@ -56,6 +57,9 @@ const config: HardhatUserConfig = {
     },
     governance: {
       default: 1,
+    },
+    tomosign: {
+      default: 2,
     }
   },
 };

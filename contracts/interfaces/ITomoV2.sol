@@ -141,5 +141,34 @@ interface ITomoV2 {
     /// ***********************
     /// *****VIEW FUNCTIONS*****
     /// ***********************
+
+    /**
+     * @notice get domain separator
+     */
     function getDomainSeparator() external view returns (bytes32);
+
+    /**
+     * @notice get subject supply
+     */
+    function getSupply(address subject) external view returns (uint256);
+
+    /**
+     * @notice get balance of subject the holder hold
+     *
+     * @param subject the subject address
+     * @param holder the holder address
+     */
+    function balanceOf(
+        address subject,
+        address holder
+    ) external view returns (uint256);
+
+    /**
+     * @notice get curve module address of the subject
+     *
+     * @param subject the subject address
+     */
+    function getCurveModuleAddress(
+        address subject
+    ) external view returns (address);
 }

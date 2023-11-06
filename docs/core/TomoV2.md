@@ -135,6 +135,29 @@ function _tomoSignAddress() external view returns (address)
 |---|---|---|
 | _0 | address | undefined |
 
+### balanceOf
+
+```solidity
+function balanceOf(address subject, address holder) external view returns (uint256)
+```
+
+get balance of subject the holder hold
+
+
+
+#### Parameters
+
+| Name | Type | Description |
+|---|---|---|
+| subject | address | the subject address |
+| holder | address | the holder address |
+
+#### Returns
+
+| Name | Type | Description |
+|---|---|---|
+| _0 | uint256 | undefined |
+
 ### buyKey
 
 ```solidity
@@ -151,13 +174,35 @@ function buyKey(DataTypes.BuyKeyData vars) external payable
 |---|---|---|
 | vars | DataTypes.BuyKeyData | undefined |
 
+### getCurveModuleAddress
+
+```solidity
+function getCurveModuleAddress(address subject) external view returns (address)
+```
+
+get curve module address of the subject
+
+
+
+#### Parameters
+
+| Name | Type | Description |
+|---|---|---|
+| subject | address | the subject address |
+
+#### Returns
+
+| Name | Type | Description |
+|---|---|---|
+| _0 | address | undefined |
+
 ### getDomainSeparator
 
 ```solidity
 function getDomainSeparator() external view returns (bytes32)
 ```
 
-*********************** *****VIEW FUNCTIONS***** ***********************
+get domain separator
 
 
 
@@ -167,6 +212,28 @@ function getDomainSeparator() external view returns (bytes32)
 | Name | Type | Description |
 |---|---|---|
 | _0 | bytes32 | undefined |
+
+### getSupply
+
+```solidity
+function getSupply(address subject) external view returns (uint256)
+```
+
+get subject supply
+
+
+
+#### Parameters
+
+| Name | Type | Description |
+|---|---|---|
+| subject | address | undefined |
+
+#### Returns
+
+| Name | Type | Description |
+|---|---|---|
+| _0 | uint256 | undefined |
 
 ### initialSubject
 

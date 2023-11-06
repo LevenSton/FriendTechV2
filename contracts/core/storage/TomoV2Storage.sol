@@ -3,7 +3,6 @@
 pragma solidity ^0.8.12;
 
 import {DataTypes} from "../../libraries/DataTypes.sol";
-import {EnumerableSet} from "@openzeppelin/contracts/utils/structs/EnumerableSet.sol";
 
 /**
  * @title TomoV2Storage

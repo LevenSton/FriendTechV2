@@ -228,7 +228,7 @@ contract TomoV2 is TomoV2Base, VersionedInitializable, TomoV2Storage, ITomoV2 {
     /// @inheritdoc ITomoV2
     function transferKey(
         DataTypes.TransferKeyData calldata vars
-    ) external override {
+    ) external override whenNotPaused {
         if (_keySubjectInfo[vars.keySubject].curveModule == address(0))
             revert Errors.SubjectNotInitial();
         if (
@@ -258,6 +258,28 @@ contract TomoV2 is TomoV2Base, VersionedInitializable, TomoV2Storage, ITomoV2 {
     /// @inheritdoc ITomoV2
     function getDomainSeparator() external view override returns (bytes32) {
         return _calculateDomainSeparator();
+    }
+
+    /// @inheritdoc ITomoV2
+    function getSupply(
+        address subject
+    ) external view override returns (uint256) {
+        return _keySubjectInfo[subject].supply;
+    }
+
+    /// @inheritdoc ITomoV2
+    function balanceOf(
+        address subject,
+        address holder
+    ) external view override returns (uint256) {
+        return _keySubjectInfo[subject].balanceOf[holder];
+    }
+
+    /// @inheritdoc ITomoV2
+    function getCurveModuleAddress(
+        address subject
+    ) external view override returns (address) {
+        return _keySubjectInfo[subject].curveModule;
     }
 
     /// ****************************
