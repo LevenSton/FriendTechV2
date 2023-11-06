@@ -85,6 +85,23 @@ contract TomoV2 is TomoV2Base, VersionedInitializable, TomoV2Storage, ITomoV2 {
         );
     }
 
+    function setCustomizeFeePercent(
+        address curveModuleAddress,
+        address subjectAddress,
+        uint256 newProtocolFeePercent,
+        uint256 newSubjectFeePercent
+    ) external override onlyGov {
+        if (!_curveModuleWhitelisted[curveModuleAddress])
+            revert Errors.CurveModuleNotWhitelisted();
+        if (newProtocolFeePercent > 1000 || newSubjectFeePercent > 1000)
+            revert Errors.FeePercentTooHigh();
+        ICurveModule(curveModuleAddress).setCustomizeFeePercent(
+            subjectAddress,
+            newProtocolFeePercent,
+            newSubjectFeePercent
+        );
+    }
+
     /// ****************************
     /// *****EXTERNAL FUNCTIONS***
     /// ****************************

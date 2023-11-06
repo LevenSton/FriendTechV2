@@ -63,6 +63,13 @@ interface ITomoV2 {
         uint256 newSubjectFeePercent
     ) external;
 
+    function setCustomizeFeePercent(
+        address curveModuleAddress,
+        address subjectAddress,
+        uint256 newProtocolFeePercent,
+        uint256 newSubjectFeePercent
+    ) external;
+
     /// ***********************
     /// *****EXTERNAL FUNCTIONS*****
     /// ***********************

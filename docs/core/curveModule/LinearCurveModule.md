@@ -148,6 +148,41 @@ function processSell(address subjectAddress, uint256 amount) external nonpayable
 | _1 | uint256 | undefined |
 | _2 | uint256 | undefined |
 
+### processTransfer
+
+```solidity
+function processTransfer() external pure returns (bool)
+```
+
+
+
+
+
+
+#### Returns
+
+| Name | Type | Description |
+|---|---|---|
+| _0 | bool | undefined |
+
+### setCustomizeFeePercent
+
+```solidity
+function setCustomizeFeePercent(address subjectAddress, uint256 newProtocolFeePercent, uint256 newSubjectFeePercent) external nonpayable
+```
+
+
+
+
+
+#### Parameters
+
+| Name | Type | Description |
+|---|---|---|
+| subjectAddress | address | undefined |
+| newProtocolFeePercent | uint256 | undefined |
+| newSubjectFeePercent | uint256 | undefined |
+
 ### setFeePercent
 
 ```solidity

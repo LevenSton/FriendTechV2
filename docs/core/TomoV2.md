@@ -236,6 +236,25 @@ function setCurveFeePercent(address curveModuleAddress, uint256 newProtocolFeePe
 | newProtocolFeePercent | uint256 | undefined |
 | newSubjectFeePercent | uint256 | undefined |
 
+### setCustomizeFeePercent
+
+```solidity
+function setCustomizeFeePercent(address curveModuleAddress, address subjectAddress, uint256 newProtocolFeePercent, uint256 newSubjectFeePercent) external nonpayable
+```
+
+
+
+
+
+#### Parameters
+
+| Name | Type | Description |
+|---|---|---|
+| curveModuleAddress | address | undefined |
+| subjectAddress | address | undefined |
+| newProtocolFeePercent | uint256 | undefined |
+| newSubjectFeePercent | uint256 | undefined |
+
 ### setGovernance
 
 ```solidity

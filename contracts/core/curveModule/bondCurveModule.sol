@@ -10,6 +10,11 @@ struct BondCurveData {
     uint256 referralRatio;
 }
 
+struct CustomizeFeePercent {
+    uint256 customizeProtocolFeePercent;
+    uint256 customizeSubjectFeePercent;
+}
+
 /**
  * @title BondCurveModule
  * @author tomo Protocol
@@ -19,6 +24,7 @@ struct BondCurveData {
 
 contract BondCurveModule is ModuleBase, ICurveModule {
     mapping(address => BondCurveData) internal _dataBondCurveBySubjectAddress;
+    mapping(address => CustomizeFeePercent) internal _customizeFeePercent;
 
     uint256 protocolFeePercent;
     uint256 subjectFeePercent;
@@ -58,11 +64,24 @@ contract BondCurveModule is ModuleBase, ICurveModule {
         );
         if (msgValue < price) revert Errors.MsgValueNotEnough();
         _dataBondCurveBySubjectAddress[subjectAddress].supply += amount;
+
+        uint256 retProtoFeePercent = protocolFeePercent;
+        uint256 retSubjectFeePercent = subjectFeePercent;
+        uint256 customSubjectFeePercent = _customizeFeePercent[subjectAddress]
+            .customizeSubjectFeePercent;
+        uint256 customProtocolFeePercent = _customizeFeePercent[subjectAddress]
+            .customizeProtocolFeePercent;
+
+        if (customSubjectFeePercent != 0 || customProtocolFeePercent != 0) {
+            retProtoFeePercent = customProtocolFeePercent;
+            retSubjectFeePercent = customSubjectFeePercent;
+        }
+
         return (
             price,
             _dataBondCurveBySubjectAddress[subjectAddress].referralRatio,
-            protocolFeePercent,
-            subjectFeePercent
+            retProtoFeePercent,
+            retSubjectFeePercent
         );
     }
 
@@ -75,7 +94,24 @@ contract BondCurveModule is ModuleBase, ICurveModule {
             amount
         );
         _dataBondCurveBySubjectAddress[subjectAddress].supply -= amount;
-        return (price, protocolFeePercent, subjectFeePercent);
+
+        uint256 retProtoFeePercent = protocolFeePercent;
+        uint256 retSubjectFeePercent = subjectFeePercent;
+        uint256 customSubjectFeePercent = _customizeFeePercent[subjectAddress]
+            .customizeSubjectFeePercent;
+        uint256 customProtocolFeePercent = _customizeFeePercent[subjectAddress]
+            .customizeProtocolFeePercent;
+
+        if (customSubjectFeePercent != 0 || customProtocolFeePercent != 0) {
+            retProtoFeePercent = customProtocolFeePercent;
+            retSubjectFeePercent = customSubjectFeePercent;
+        }
+
+        return (price, retProtoFeePercent, retSubjectFeePercent);
+    }
+
+    function processTransfer() external pure override returns (bool) {
+        return true;
     }
 
     function setSubPrice(
@@ -83,6 +119,17 @@ contract BondCurveModule is ModuleBase, ICurveModule {
         uint256 price
     ) external override onlyTomoV2 {
         revert Errors.NotSupportFunction();
+    }
+
+    function setCustomizeFeePercent(
+        address subjectAddress,
+        uint256 newProtocolFeePercent,
+        uint256 newSubjectFeePercent
+    ) external override onlyTomoV2 {
+        _customizeFeePercent[subjectAddress] = CustomizeFeePercent(
+            newProtocolFeePercent,
+            newSubjectFeePercent
+        );
     }
 
     function setFeePercent(

@@ -12,6 +12,11 @@ struct ConstCurveData {
     uint256 referralRatio;
 }
 
+struct CustomizeFeePercent {
+    uint256 customizeProtocolFeePercent;
+    uint256 customizeSubjectFeePercent;
+}
+
 /**
  * @title ConstCurveModule
  * @author tomo Protocol
@@ -20,6 +25,7 @@ struct ConstCurveData {
  */
 contract ConstCurveModule is ModuleBase, ICurveModule {
     mapping(address => ConstCurveData) internal _dataConstCurveBySubjectAddress;
+    mapping(address => CustomizeFeePercent) internal _customizeFeePercent;
 
     uint256 protocolFeePercent;
     uint256 subjectFeePercent;
@@ -63,11 +69,24 @@ contract ConstCurveModule is ModuleBase, ICurveModule {
             _dataConstCurveBySubjectAddress[subjectAddress].price * amount
         ) revert Errors.MsgValueNotEnough();
         _dataConstCurveBySubjectAddress[subjectAddress].supply += amount;
+
+        uint256 retProtoFeePercent = protocolFeePercent;
+        uint256 retSubjectFeePercent = subjectFeePercent;
+        uint256 customSubjectFeePercent = _customizeFeePercent[subjectAddress]
+            .customizeSubjectFeePercent;
+        uint256 customProtocolFeePercent = _customizeFeePercent[subjectAddress]
+            .customizeProtocolFeePercent;
+
+        if (customSubjectFeePercent != 0 || customProtocolFeePercent != 0) {
+            retProtoFeePercent = customProtocolFeePercent;
+            retSubjectFeePercent = customSubjectFeePercent;
+        }
+
         return (
             _dataConstCurveBySubjectAddress[subjectAddress].price * amount,
             _dataConstCurveBySubjectAddress[subjectAddress].referralRatio,
-            protocolFeePercent,
-            subjectFeePercent
+            retProtoFeePercent,
+            retSubjectFeePercent
         );
     }
 
@@ -76,6 +95,10 @@ contract ConstCurveModule is ModuleBase, ICurveModule {
         uint256 amount
     ) external override onlyTomoV2 returns (uint256, uint256, uint256) {
         revert Errors.ConstCurveCanSell();
+    }
+
+    function processTransfer() external pure override returns (bool) {
+        return false;
     }
 
     function setSubPrice(
@@ -91,6 +114,17 @@ contract ConstCurveModule is ModuleBase, ICurveModule {
     ) external override onlyTomoV2 {
         protocolFeePercent = newProtocolFeePercent;
         subjectFeePercent = newSubjectFeePercent;
+    }
+
+    function setCustomizeFeePercent(
+        address subjectAddress,
+        uint256 newProtocolFeePercent,
+        uint256 newSubjectFeePercent
+    ) external override onlyTomoV2 {
+        _customizeFeePercent[subjectAddress] = CustomizeFeePercent(
+            newProtocolFeePercent,
+            newSubjectFeePercent
+        );
     }
 
     function getBuyPrice(

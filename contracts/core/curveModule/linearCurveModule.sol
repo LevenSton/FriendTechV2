@@ -12,6 +12,11 @@ struct LinearCurveData {
     uint256 referralRatio;
 }
 
+struct CustomizeFeePercent {
+    uint256 customizeProtocolFeePercent;
+    uint256 customizeSubjectFeePercent;
+}
+
 /**
  * @title LinearCurveModule
  * @author tomo Protocol
@@ -22,6 +27,7 @@ struct LinearCurveData {
 contract LinearCurveModule is ModuleBase, ICurveModule {
     mapping(address => LinearCurveData)
         internal _dataLinearCurveBySubjectAddress;
+    mapping(address => CustomizeFeePercent) internal _customizeFeePercent;
 
     uint256 protocolFeePercent;
     uint256 subjectFeePercent;
@@ -67,11 +73,23 @@ contract LinearCurveModule is ModuleBase, ICurveModule {
         );
         if (msgValue < price) revert Errors.MsgValueNotEnough();
         _dataLinearCurveBySubjectAddress[subjectAddress].supply += amount;
+
+        uint256 retProtoFeePercent = protocolFeePercent;
+        uint256 retSubjectFeePercent = subjectFeePercent;
+        uint256 customSubjectFeePercent = _customizeFeePercent[subjectAddress]
+            .customizeSubjectFeePercent;
+        uint256 customProtocolFeePercent = _customizeFeePercent[subjectAddress]
+            .customizeProtocolFeePercent;
+
+        if (customSubjectFeePercent != 0 || customProtocolFeePercent != 0) {
+            retProtoFeePercent = customProtocolFeePercent;
+            retSubjectFeePercent = customSubjectFeePercent;
+        }
         return (
             price,
             _dataLinearCurveBySubjectAddress[subjectAddress].referralRatio,
-            protocolFeePercent,
-            subjectFeePercent
+            retProtoFeePercent,
+            retSubjectFeePercent
         );
     }
 
@@ -86,7 +104,23 @@ contract LinearCurveModule is ModuleBase, ICurveModule {
             amount
         );
         _dataLinearCurveBySubjectAddress[subjectAddress].supply -= amount;
-        return (price, protocolFeePercent, subjectFeePercent);
+
+        uint256 retProtoFeePercent = protocolFeePercent;
+        uint256 retSubjectFeePercent = subjectFeePercent;
+        uint256 customSubjectFeePercent = _customizeFeePercent[subjectAddress]
+            .customizeSubjectFeePercent;
+        uint256 customProtocolFeePercent = _customizeFeePercent[subjectAddress]
+            .customizeProtocolFeePercent;
+        if (customSubjectFeePercent != 0 || customProtocolFeePercent != 0) {
+            retProtoFeePercent = customProtocolFeePercent;
+            retSubjectFeePercent = customSubjectFeePercent;
+        }
+
+        return (price, retProtoFeePercent, retSubjectFeePercent);
+    }
+
+    function processTransfer() external pure override returns (bool) {
+        return true;
     }
 
     function setSubPrice(
@@ -102,6 +136,17 @@ contract LinearCurveModule is ModuleBase, ICurveModule {
     ) external override onlyTomoV2 {
         protocolFeePercent = newProtocolFeePercent;
         subjectFeePercent = newSubjectFeePercent;
+    }
+
+    function setCustomizeFeePercent(
+        address subjectAddress,
+        uint256 newProtocolFeePercent,
+        uint256 newSubjectFeePercent
+    ) external override onlyTomoV2 {
+        _customizeFeePercent[subjectAddress] = CustomizeFeePercent(
+            newProtocolFeePercent,
+            newSubjectFeePercent
+        );
     }
 
     function getBuyPrice(

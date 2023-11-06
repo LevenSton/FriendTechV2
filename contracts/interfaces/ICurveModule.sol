@@ -32,6 +32,8 @@ interface ICurveModule {
         uint256 amount
     ) external returns (uint256, uint256, uint256);
 
+    function processTransfer() external returns (bool);
+
     function getBuyPrice(
         address subjectAddress,
         uint256 amount
@@ -44,6 +46,12 @@ interface ICurveModule {
 
     //only for constCurve Module, subject owner can update subscribe price
     function setSubPrice(address subjectAddress, uint256 price) external;
+
+    function setCustomizeFeePercent(
+        address subjectAddress,
+        uint256 newProtocolFeePercent,
+        uint256 newSubjectFeePercent
+    ) external;
 
     function setFeePercent(
         uint256 newProtocolFeePercent,
